@@ -38,3 +38,4 @@ At the moment it works with AngularJS applications initialized with `ng-app`.
 5. Create new Pull Request
 # capybara-mutation-observer
 # capybara-mutation-observer
+# capybara-mutation-observer
