@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'capybara/angular/version'
+require 'capybara/mutation_observer/version'
 
 #
 # This gem is a fork of capybara-angular
