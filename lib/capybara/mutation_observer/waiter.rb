@@ -1,5 +1,5 @@
 module Capybara
-  module Angular
+  module MutationObserver
     class Waiter
       WAITER_JS = IO.read(File.expand_path "../waiter.js", __FILE__)
 
@@ -29,20 +29,20 @@ module Capybara
       end
 
       def timeout?(start)
-        Time.now - start > Capybara::Angular.default_max_wait_time
+        Time.now - start > Capybara::MutationObserver.default_max_wait_time
       end
 
       def timeout!
-        raise Timeout::Error.new("timeout while waiting for angular")
+        raise Timeout::Error.new("timeout while waiting for mutation observer")
       end
 
       def inject_waiter
-        return if page.evaluate_script("window.capybaraAngularReady !== undefined")
+        return if page.evaluate_script("window.__MutationStable__ !== undefined")
         page.execute_script WAITER_JS
       end
 
       def ready?
-        page.evaluate_script("window.capybaraAngularReady === true")
+        page.evaluate_script("window.__MutationStable__() === true")
       end
     end
   end

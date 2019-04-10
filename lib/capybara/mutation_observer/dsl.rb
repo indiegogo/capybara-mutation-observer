@@ -1,5 +1,5 @@
 module Capybara
-  module Angular
+  module MutationObserver
     module DSL
       include Capybara::DSL
 
@@ -10,19 +10,19 @@ module Capybara
       end
 
       def page
-        wait_until_angular_ready unless @ignoring_angular
+        wait_until_ready unless @ignoring_mutation
         Capybara.current_session
       end
 
-      def wait_until_angular_ready
+      def wait_until_ready
         Waiter.new(Capybara.current_session).wait_until_ready
       end
 
-      def ignoring_angular
-        @ignoring_angular = true
+      def ignoring_mutation
+        @ignoring_mutation = true
         yield
       ensure
-        @ignoring_angular = false
+        @ignoring_mutation = false
       end
     end
   end

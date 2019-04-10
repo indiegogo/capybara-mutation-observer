@@ -2,17 +2,17 @@ require 'rack'
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
-require 'capybara/angular'
+require 'capybara/mutation_observer'
 
 Capybara.default_driver = :poltergeist
 Capybara.app = Rack::Directory.new('spec/public')
 Capybara.default_max_wait_time = 2
-Capybara::Angular.default_max_wait_time = 10
+Capybara::MutationObserver.default_max_wait_time = 10
 
-feature 'Waiting for angular' do
-  include Capybara::Angular::DSL
+feature 'Waiting for mutation' do
+  include Capybara::MutationObserver::DSL
 
-  scenario 'when manually bootstrapping an angular application' do
+  scenario 'when manually bootstrapping an mutation application' do
     open_manual_bootstrap_page
     timeout_page_should_have_waited
   end
@@ -27,14 +27,14 @@ feature 'Waiting for angular' do
     timeout_page_should_have_waited
   end
 
-  scenario 'when visiting a non-angular page' do
-    open_non_angular_page
-    non_angular_page_should_load
+  scenario 'when visiting a non-mutation page' do
+    open_non_mutation_page
+    non_mutation_page_should_load
   end
 
-  scenario 'when visiting a non-angular page that loads angular javascript' do
-    open_non_angular_page_with_angular_javascript
-    non_angular_page_should_load
+  scenario 'when visiting a non-mutation page that loads angular javascript' do
+    open_non_mutation_page_with_angular_javascript
+    non_mutation_page_should_load
   end
 
   def open_manual_bootstrap_page
@@ -49,19 +49,19 @@ feature 'Waiting for angular' do
     visit '/ng-app-not-on-body.html'
   end
 
-  def open_non_angular_page
-    visit '/non-angular-page.html'
+  def open_non_mutation_page
+    visit '/non-mutation-page.html'
   end
 
-  def open_non_angular_page_with_angular_javascript
-    visit '/non-angular-page-with-angular-javascript.html'
+  def open_non_mutation_page_with_angular_javascript
+    visit '/non-mutation-page-with-angular-javascript.html'
   end
 
   def timeout_page_should_have_waited
     expect(page).to have_content('waited')
   end
 
-  def non_angular_page_should_load
-    expect(page).to have_content('non-angular page')
+  def non_mutation_page_should_load
+    expect(page).to have_content('non-mutation page')
   end
 end

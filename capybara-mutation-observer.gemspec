@@ -3,13 +3,16 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'capybara/angular/version'
 
+#
+# This gem is a fork of capybara-angular
+#
 Gem::Specification.new do |spec|
-  spec.name          = "capybara-angular"
-  spec.version       = Capybara::Angular::VERSION
-  spec.authors       = ["Pawel Pierzchala"]
-  spec.email         = ["pawelpierzchala@gmail.com"]
-  spec.description   = %q{Capybara API that knows how to wait for Angular in end to end specs}
-  spec.summary       = %q{Stable Capybara API for AngularJS applications}
+  spec.name          = "capybara-mutation-observer"
+  spec.version       = Capybara::MutationObserver::VERSION
+  spec.authors       = ["Pawel Pierzchala","Curtis Schofield"]
+  spec.email         = ["pawelpierzchala@gmail.com", "curtis@ram9.cc"]
+  spec.description   = %q{Capybara API that knows how to wait for dom mutations to relax in end to end specs}
+  spec.summary       = %q{Stable Capybara API for DOM JS applications}
   spec.homepage      = ""
   spec.license       = "MIT"
 
