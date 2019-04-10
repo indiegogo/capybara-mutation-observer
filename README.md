@@ -1,33 +1,33 @@
-# Capybara::Angular
-[![Build Status](https://travis-ci.org/wrozka/capybara-angular.svg?branch=master)](https://travis-ci.org/wrozka/capybara-angular)
-[![Gem Version](https://badge.fury.io/rb/capybara-angular.svg)](http://badge.fury.io/rb/capybara-angular)
+# Capybara::MutationObserver
 
-Capybara API that knows how to wait for Angular in end to end specs.
+Capybara API that knows how to wait for MutationObserver in end to end specs.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'capybara-angular'
+    gem 'capybara-mutation-observer'
 
 ## Usage
 
-Use it as you would use regular Capybara API, however this time, you won't face any race conditions when working with AngularJS applications.
+Use it as you would use regular Capybara API, however this time, you won't face any race conditions when working with DOM Mutation JS applications.
 
 ```ruby
-include Capybara::Angular::DSL
+include Capybara::MutationObserver::DSL
 ```
 
-If you need to run some code without caring about AngularJS, you can use `ignoring_angular` like this:
+If you need to run some code without caring about Angular or mutating JS, you can use `ignoring_mutation` like this:
 ```ruby
-ignoring_angular do
-  # Your AngularJS agnostic code goes here
+ignoring_mutation do
+  # Your Mutation agnostic code goes here
 end
 ```
 
 ## Limitations
 
-At the moment it works with AngularJS applications initialized with `ng-app`.
+At the moment it works with AngularJS applications initialized with `ng-app`. Other frameworks that modify the dom should work aswell however are untested.
+
+Testing with other frameworks like Vue is expected to occur
 
 ## Contributing
 
