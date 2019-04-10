@@ -23,7 +23,7 @@ module Capybara
     end
 
     def self.default_cycle_length_ms
-      @default_cycle_length_ms || 500
+      @default_cycle_length_ms ||750
     end
 
     def self.default_cycle_length_ms=(value)
