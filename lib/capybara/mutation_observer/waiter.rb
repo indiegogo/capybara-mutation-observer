@@ -42,7 +42,7 @@ module Capybara
       end
 
       def ready?
-        page.evaluate_script("window.__MutationStable__() === true")
+        page.evaluate_script("window.__MutationStable__ && window.__MutationStable__() === true")
       end
     end
   end
