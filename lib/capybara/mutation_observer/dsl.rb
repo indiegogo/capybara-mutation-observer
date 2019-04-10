@@ -2,7 +2,6 @@ module Capybara
   module MutationObserver
     module DSL
       include Capybara::DSL
-
       Capybara::Session::DSL_METHODS.each do |method|
         define_method(method) do |*args, &block|
           page.send(method, *args, &block)

@@ -13,5 +13,21 @@ module Capybara
     def self.default_max_wait_time=(timeout)
       @default_max_wait_time = timeout
     end
+
+    def self.default_max_cycles_till_stable
+      @default_max_cycles_till_stable || 2
+    end
+
+    def self.default_max_cycles_till_stable=(value)
+      @default_max_cycles_till_stable = value
+    end
+
+    def self.default_cycle_length_ms
+      @default_cycle_length_ms || 500
+    end
+
+    def self.default_cycle_length_ms=(value)
+      @default_cycle_length_ms = value
+    end
   end
 end

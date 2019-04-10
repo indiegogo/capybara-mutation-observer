@@ -37,24 +37,40 @@ feature 'Waiting for mutation' do
     non_mutation_page_should_load
   end
 
+  scenario 'when visiting a non-mutation page that loads angular javascript' do
+    open_non_mutation_page_with_angular_javascript
+    non_mutation_page_should_load
+  end
+
+
   def open_manual_bootstrap_page
-    visit '/manual.html'
+    ignoring_mutation do
+      visit '/manual.html'
+    end
   end
 
   def open_ng_app_bootstrap_page
-    visit '/ng-app.html'
+    ignoring_mutation do
+      visit '/ng-app.html'
+    end
   end
 
   def open_ng_app_not_on_body_bootstrap_page
-    visit '/ng-app-not-on-body.html'
+    ignoring_mutation do
+      visit '/ng-app-not-on-body.html'
+    end
   end
 
   def open_non_mutation_page
-    visit '/non-mutation-page.html'
+    ignoring_mutation do
+      visit '/non-mutation-page.html'
+    end
   end
 
   def open_non_mutation_page_with_angular_javascript
-    visit '/non-mutation-page-with-angular-javascript.html'
+    ignoring_mutation do
+      visit '/non-mutation-page-with-angular-javascript.html'
+    end
   end
 
   def timeout_page_should_have_waited
