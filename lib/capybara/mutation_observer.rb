@@ -23,11 +23,29 @@ module Capybara
     end
 
     def self.default_cycle_length_ms
-      @default_cycle_length_ms ||750
+      @default_cycle_length_ms || 750
     end
 
     def self.default_cycle_length_ms=(value)
       @default_cycle_length_ms = value
     end
+
+    def self.default_element_selector
+      @default_element_selector || "body"
+    end
+
+    def self.default_element_selector=(value)
+      @default_element_selector = value.to_s
+    end
+
+    def self.default_debug=(value)
+      #false => false anything else is true
+      @default_debug = (false != value)
+    end
+
+    def self.default_debug
+      @default_debug || false
+    end
+
   end
 end

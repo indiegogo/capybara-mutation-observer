@@ -8,6 +8,10 @@ Capybara.default_driver = :poltergeist
 Capybara.app = Rack::Directory.new('spec/public')
 Capybara.default_max_wait_time = 2
 Capybara::MutationObserver.default_max_wait_time = 10
+Capybara::MutationObserver.default_debug = true
+Capybara::MutationObserver.default_max_cycles_till_stable = 3
+Capybara::MutationObserver.default_cycle_length_ms = 750
+Capybara::MutationObserver.default_element_selector = "[ng-controller]"
 
 feature 'Waiting for mutation' do
   include Capybara::MutationObserver::DSL
@@ -19,14 +23,45 @@ feature 'Waiting for mutation' do
 
   scenario 'when using ng-app to bootstrap an application' do
     open_ng_app_bootstrap_page
+
+    # app.js is setup with 4 total timeouts of characterData changes
+    # one at 750ms, one at 1500ms, one at 2500ms, one at 5000ms
+
+    # that should be a runtime floor of around > 4500ms
+    # that should be 3 rounds of total mutations
+
+    # after the mutation observer stops
+    # the capybara wait time begins. (2000 ms)
     timeout_page_should_have_waited
+
+
+    # last timer is a 2500ms , next timer at 5400 ms
+    # this should give 3 full cycles of non mutation
+    #
+    # floor(5400-2500) / 750ms == 3
+    
+    expect(page.evaluate_script("window._mutationState_.executionsWithoutMutation")).to eq(3)
+
+    #total runtime of function is expected to be something like
+    # 1 cycles + 1 cycles + 1cycle + 3cycles
+    #
+    expect(page.evaluate_script("window._mutationState_.totalCycles")).to eq(6)
   end
 
   scenario 'when using ng-app not on the body tag to bootstrap an application' do
     open_ng_app_not_on_body_bootstrap_page
     timeout_page_should_have_waited
+    # same reason as above - different initalization mechanism
+    expect(page.evaluate_script("window._mutationState_.executionsWithoutMutation")).to eq(3)
+    expect(page.evaluate_script("window._mutationState_.totalCycles")).to eq(6)
   end
 
+
+  #
+  # below three scenarios should not invoke the mutation observer ass
+  # they are missing the matching elementSelector
+  #
+  
   scenario 'when visiting a non-mutation page' do
     open_non_mutation_page
     non_mutation_page_should_load
