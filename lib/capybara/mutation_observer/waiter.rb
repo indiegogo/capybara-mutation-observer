@@ -50,10 +50,12 @@ module Capybara
 
       def setup_script
         <<~SETUP_SCRIPT
-          __MutationSetup__({
-            cycle_length_ms: #{Capybara::MutationObserver.default_cycle_length_ms},
-            max_cycles_till_stable: #{Capybara::MutationObserver.default_max_cycles_till_stable}
-          });
+          window.onload = function () {
+            __MutationSetup__({
+              cycle_length_ms: #{Capybara::MutationObserver.default_cycle_length_ms},
+              max_cycles_till_stable: #{Capybara::MutationObserver.default_max_cycles_till_stable}
+            });
+          };
         SETUP_SCRIPT
       end
 
