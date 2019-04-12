@@ -10,7 +10,7 @@ Capybara.default_max_wait_time = 2
 Capybara::MutationObserver.default_max_wait_time = 10
 Capybara::MutationObserver.default_debug = true
 Capybara::MutationObserver.default_max_cycles_till_stable = 3
-Capybara::MutationObserver.default_cycle_length_ms = 750
+Capybara::MutationObserver.default_cycle_length_ms = 500
 Capybara::MutationObserver.default_element_selector = "[ng-controller]"
 
 feature 'Waiting for mutation' do
@@ -41,11 +41,6 @@ feature 'Waiting for mutation' do
     # floor(5400-2500) / 750ms == 3
     
     expect(page.evaluate_script("window._mutationState_.executionsWithoutMutation")).to eq(3)
-
-    #total runtime of function is expected to be something like
-    # 1 cycles + 1 cycles + 1cycle + 3cycles
-    #
-    expect(page.evaluate_script("window._mutationState_.totalCycles")).to eq(6)
   end
 
   scenario 'when using ng-app not on the body tag to bootstrap an application' do
@@ -53,15 +48,24 @@ feature 'Waiting for mutation' do
     timeout_page_should_have_waited
     # same reason as above - different initalization mechanism
     expect(page.evaluate_script("window._mutationState_.executionsWithoutMutation")).to eq(3)
-    expect(page.evaluate_script("window._mutationState_.totalCycles")).to eq(6)
   end
 
+
+  # this test is for an ongoing mutation observer that
+  # periodically resets
+  #
+  scenario 'with continuous mutations at various points' do
+    ignoring_mutation do
+      visit '/continuous.html'
+    end
+    expect(page).to have_content('waited') # first cycle
+    expect(page).to have_content('last-change') # last cycle
+  end
 
   #
   # below three scenarios should not invoke the mutation observer ass
   # they are missing the matching elementSelector
   #
-  
   scenario 'when visiting a non-mutation page' do
     open_non_mutation_page
     non_mutation_page_should_load
