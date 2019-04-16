@@ -1,11 +1,11 @@
-require "capybara"
-require "capybara/dsl"
-
-require_relative "mutation_observer/dsl"
-require_relative "mutation_observer/waiter"
-
 module Capybara
   module MutationObserver
+    def self.debug(msg)
+      if default_debug
+        puts "MutationObserver::DEBUG::#{msg.inspect}"
+      end
+    end
+
     def self.default_max_wait_time
       @default_max_wait_time || Capybara.default_max_wait_time
     end

@@ -2,7 +2,7 @@ require 'rack'
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
-require 'capybara/mutation_observer'
+require 'capybara-mutation-observer'
 
 Capybara.default_driver = :poltergeist
 Capybara.app = Rack::Directory.new('spec/public')

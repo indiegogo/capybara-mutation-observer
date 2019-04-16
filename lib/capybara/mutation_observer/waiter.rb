@@ -45,6 +45,8 @@ module Capybara
       def inject_waiter
         return if page.evaluate_script(mutation_function_exists_js)
         page.execute_script WAITER_JS
+        Capybara::MutationObserver.debug("Injecting Waiter ->")
+        Capybara::MutationObserver.debug(setup_script)
         page.execute_script setup_script
       end
 
