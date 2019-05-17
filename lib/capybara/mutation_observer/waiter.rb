@@ -13,6 +13,7 @@ module Capybara
 
       def wait_until_ready
         return unless driver_supports_js?
+
         start = Time.now
 
         until ready?
@@ -20,6 +21,9 @@ module Capybara
           timeout! if timeout?(start)
           sleep(0.01)
         end
+        Capybara::MutationObserver.debug(
+          "network Count : #{ page.evaluate_script("window.__networkCount__()")}"
+        )
       end
 
       private
