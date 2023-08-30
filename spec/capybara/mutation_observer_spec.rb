@@ -1,10 +1,10 @@
 require 'rack'
 require 'capybara'
 require 'capybara/rspec'
-require 'capybara/poltergeist'
+require 'capybara/cuprite'
 require 'capybara-mutation-observer'
 
-Capybara.default_driver = :poltergeist
+Capybara.default_driver = :cuprite
 Capybara.app = Rack::Directory.new('spec/public')
 Capybara.default_max_wait_time = 2
 Capybara::MutationObserver.default_max_wait_time = 10
@@ -49,7 +49,6 @@ feature 'Waiting for mutation' do
     # same reason as above - different initalization mechanism
     expect(page.evaluate_script("window._mutationState_.executionsWithoutMutation")).to eq(3)
   end
-
 
   # this test is for an ongoing mutation observer that
   # periodically resets

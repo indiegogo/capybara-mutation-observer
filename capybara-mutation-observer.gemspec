@@ -25,7 +25,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rackup"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "poltergeist"
+  spec.add_development_dependency "cuprite"
   spec.add_development_dependency "puma"
 end
