@@ -2,12 +2,6 @@ module Capybara
   module MutationObserver
     module DSL
       include Capybara::DSL
-      Capybara::Session::DSL_METHODS.each do |method|
-        Capybara::MutationObserver.debug("Redefining #{method}")
-        define_method(method) do |*args, &block|
-          page.send(method, *args, &block)
-        end
-      end
 
       def page
         Capybara::MutationObserver.debug("Page Invoked")
@@ -20,12 +14,14 @@ module Capybara
         Waiter.new(Capybara.current_session).wait_until_ready
       end
 
-      def ignoring_mutation
-        @ignoring_mutation = true
-        Capybara::MutationObserver.debug("Ignoring Mutation")
-        yield
+      def ignoring_mutation(value = true)
+        ignoring_mutation_was = @ignoring_mutation
+        if @ignoring_mutation = value
+          Capybara::MutationObserver.debug("Ignoring Mutation")
+        end
+        yield if block_given?
       ensure
-        @ignoring_mutation = false
+        @ignoring_mutation = ignoring_mutation_was if block_given?
       end
     end
   end
